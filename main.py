@@ -1,3 +1,5 @@
+from db import get_connection
+
 def menu():
     opc = 0
     while opc != 1 and opc != 2 and opc != 3 and opc != 4:
