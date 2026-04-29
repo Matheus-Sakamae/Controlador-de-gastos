@@ -26,6 +26,10 @@ def menu():
             cursor.execute(query, (nome_compra, preco_compra, data_compra, categoria_compra))
             conn.commit()
             print("Gasto adicionado com sucesso!")
+            print("Pressione ENTER para voltar ao menu...")
+            enter = input()
+            if enter == "":
+                menu()
 
         elif opc == 2:
             print("Exibindo gastos...")
@@ -36,6 +40,12 @@ def menu():
             gastos = cursor.fetchall()
             for gasto in gastos:
                 print(f"ID: {gasto[0]}, Nome da Compra: {gasto[1]}, Valor: {gasto[2]}, Data: {gasto[3]}, Categoria: {gasto[4]}")
+            print("Pressione ENTER para voltar ao menu...")
+            enter = input()
+            if enter == "":
+                menu()
+
+
         elif opc == 3:
             print("Exibindo total de gastos...")
             query = "SELECT SUM(preco_compra) FROM cadastro_gastos"
@@ -44,6 +54,10 @@ def menu():
             cursor.execute(query)
             total = cursor.fetchone()[0]
             print(f"Total de gastos: {total}")
+            print("Pressione ENTER para voltar ao menu...")
+            enter = input()
+            if enter == "":
+                menu()
 
         elif opc == 4:
             print("Saindo do programa...")
