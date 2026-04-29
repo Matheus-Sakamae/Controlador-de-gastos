@@ -9,7 +9,8 @@ def menu():
           1-Adicionar gasto
           2-Ver gastos
           3-Ver total de gastos 
-          4-Sair 
+          4-Apagar gastos
+          5-Sair
           
           
           '''
@@ -60,9 +61,28 @@ def menu():
                 menu()
 
         elif opc == 4:
+            query = "SELECT * FROM cadastro_gastos"
+            conn = get_connection()
+            cursor = conn.cursor()
+            cursor.execute(query)
+            gastos = cursor.fetchall()
+            for gasto in gastos:
+                print(f"ID: {gasto[0]}, Nome da Compra: {gasto[1]}, Valor: {gasto[2]}, Data: {gasto[3]}, Categoria: {gasto[4]}")
+            print("Digite o ID do gasto que deseja apagar: ")
+            id_compra = int(input())
+            query = "DELETE FROM cadastro_gastos WHERE id_compra = %s"
+            cursor.execute(query, (id_compra,))
+            conn.commit()
+            print("Gasto apagado com sucesso!")
+            print("Pressione ENTER para voltar ao menu...")
+            enter = input()
+            if enter == "":
+                menu()
+            
+        elif opc == 5:
             print("Saindo do programa...")
 
-        if opc != 1 and opc != 2 and opc != 3 and opc != 4:
+        if opc != 1 and opc != 2 and opc != 3 and opc != 4 and opc != 5:
             print("Opção inválida. Por favor, escolha uma opção válida.")
 
 menu()
