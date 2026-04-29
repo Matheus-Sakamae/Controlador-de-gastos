@@ -1,6 +1,6 @@
 from db import get_connection
 from datetime import datetime
-
+    
 def menu():
     opc = 0
     while opc != 1 and opc != 2 and opc != 3 and opc != 4:
@@ -49,6 +49,7 @@ def menu():
 
 
         elif opc == 3:
+            limite = float(input("Qual é o seu limite de gastos para esse mês? : "))
             print("Exibindo total de gastos...")
             query = "SELECT SUM(preco_compra) FROM cadastro_gastos"
             conn = get_connection()
@@ -56,6 +57,11 @@ def menu():
             cursor.execute(query)
             total = cursor.fetchone()[0]
             print(f"Total de gastos: {total}")
+            restante = limite - float(total)
+            if restante > 0:
+                print(f"Você ainda pode gastar R${restante:.2f} para atingir o seu limite.")
+            elif restante < 0:
+                print(f"Você ultrapassou seu limite em R${-restante:.2f}.")
             print("Pressione ENTER para voltar ao menu...")
             enter = input()
             if enter == "":
@@ -102,7 +108,7 @@ def menu():
             enter = input()
             if enter == "":
                 menu()
-                
+
         elif opc == 6:
             print("Saindo do programa...")
 
